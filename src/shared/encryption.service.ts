@@ -1,40 +1,52 @@
 import { Injectable } from '@nestjs/common';
-import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
+import {
+  createCipheriv,
+  createDecipheriv,
+  randomBytes,
+  pbkdf2Sync,
+} from 'crypto';
 
 @Injectable()
 export class EncryptionService {
   private readonly algorithm = 'aes-256-cbc';
-  private readonly keyLength: number = 32; // 256-bit key for AES-256
+  private readonly keyLength: number = 32;
+  private readonly salt: string = 'mysaltvalue'; // Salt used for key derivation
+  private readonly key: Buffer; // Fixed-length key for encryption and decryption
 
-  encrypt(plaintext: string): Buffer {
-    const key = this.generateKey();
-    const cipher = this.getCipher(key);
-    const ciphertext = Buffer.concat([
-      cipher.update(Buffer.from(plaintext, 'utf8')),
-      cipher.final(),
-    ]);
-    return ciphertext;
-  }
-
-  decrypt(ciphertext: Buffer): string {
-    const key = this.generateKey();
-    const decipher = this.getDecipher(key);
-    const decryptedText = Buffer.concat([
-      decipher.update(ciphertext),
-      decipher.final(),
-    ]).toString('utf8');
-    return decryptedText;
+  constructor() {
+    // Generate a fixed key for encryption and decryption
+    this.key = this.generateKey();
   }
 
   private generateKey(): Buffer {
-    return randomBytes(this.keyLength);
+    return pbkdf2Sync(
+      'mysecretkeymysecretkeymysecretkey',
+      this.salt,
+      100000,
+      this.keyLength,
+      'sha512',
+    );
   }
 
-  private getCipher(key: Buffer): any {
-    return createCipheriv(this.algorithm, key, Buffer.alloc(16, 0));
+  encrypt(plaintext: string): string {
+    const cipher = createCipheriv(
+      this.algorithm,
+      this.key,
+      Buffer.alloc(16, 0),
+    );
+    const encryptedBuffer = cipher.update(plaintext, 'utf8', 'base64');
+    const ciphertext = encryptedBuffer + cipher.final('base64');
+    return ciphertext;
   }
 
-  private getDecipher(key: Buffer): any {
-    return createDecipheriv(this.algorithm, key, Buffer.alloc(16, 0));
+  decrypt(ciphertext: string): string {
+    const decipher = createDecipheriv(
+      this.algorithm,
+      this.key,
+      Buffer.alloc(16, 0),
+    );
+    const decryptedBuffer = decipher.update(ciphertext, 'base64', 'utf8');
+    const decryptedText = decryptedBuffer + decipher.final('utf8');
+    return decryptedText;
   }
 }
