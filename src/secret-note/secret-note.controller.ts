@@ -13,9 +13,13 @@ import { SecretNoteService } from './secret-note.service';
 import { CreateSecretNoteDto } from './secret-note.dto';
 import { SecretNotes, SecretNotesWithoutNote } from './secret-note.entity';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+const version = process.env.VERSION;
 
 @ApiTags('Secret Notes')
-@Controller('api/v1/note')
+@Controller(`api/${version}/note`)
 export class SecretNoteController {
   constructor(private readonly secretNoteService: SecretNoteService) {}
 
