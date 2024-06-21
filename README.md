@@ -1,73 +1,71 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Template Code Challenge - Back-End Engineer ( Spherity )
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## In concrete terms, this means the following:
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- We ask you to build an API which supports a common CRUD pattern. Please include the operations for Create, Read, Update and Delete
+- The user should be able to interact via the API with an entity called “secretNote”
+- The entity should support the fields “note” and “id”
 
-## Description
+Take the following user scenarios to build the business logic
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- As a user, I want to
+  - store a note, which will be encrypted on the API and stored in the database.
+  - retrieve a list of all my stored notes (only the necessary information like a creation date and an id).
+  - retrieve a single note - where the api returns the decrypted value.
+  - retrieve a single note - where the api returns the encrypted value.
+  - delete a single note with a given id.
+  - update a single note with a given id and a new note which gets encrypted again.
 
-## Installation
+**Note:** Assume that your application is only going to be used by a single user who controls the key of the API. So only care about the entity ‘secretNote’ - User management and authentication is not part of the challenge.
 
-```bash
-$ yarn install
-```
+## The following basic conditions apply:
+
+- Implement the challenge using the following technologies
+  - TypeScript <img src="https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" align="center" height="20">
+  - NestJS <img src="https://nestjs.com/img/logo-small.svg" align="center" height="20" />
+  - Database of your choice
+  - Jest as testing framework
+- Use an encryption type of your choice and explain why you chose it.
+- Write test cases for the most critical code sections.
+- Work on your solution in a public repository on GitHub.
+- Your application should be packaged in a container and can be run using docker.
+- Also write an example GitHub Actions workflow for building your application.
+- Feel free to extend the conditions with something special that you have learned in your previous jobs and fits into the project.
+
+Build a working prototype with these guidelines, which you can show us in a mini demo.
+Afterwards you explain code that stands out to you and the decisions you had to make during your challenge.
+
+The goal of the challenge is not to check if your code looks perfect - It’s about getting to know your problem solving and interdisciplinary skills.
+
+If you are ready to present your challenge, please write us back with the dates and time when you are available. Plan about 1 hour for the presentation of your solution. Please also share the link to your repo on Github in that mail.
+
+We are looking forward to your solution. If you have any questions about your challenge, please feel free to contact Konstantin <konstantin.tsabolov@spherity.com>. If you have any further questions according to the HR side, feel free to contact me <carolina.rocha@spherity.com>.
 
 ## Running the app
 
-```bash
-# development
-$ yarn run start
+1. #### Installation
 
-# watch mode
-$ yarn run start:dev
+   ```bash
+   yarn run install
+   ```
 
-# production mode
-$ yarn run start:prod
-```
+2. #### Configure environment
 
-## Test
+   - Copy `.env.example` file and paste it within same directory
+   - Rename it as `.env`
+   - Configure `port` and `database environemnt`
 
-```bash
-# unit tests
-$ yarn run test
+3. #### Runing the app
 
-# e2e tests
-$ yarn run test:e2e
+   ```bash
+   yarn run start
+   ```
 
-# test coverage
-$ yarn run test:cov
-```
+   You can see swagger doucmentation at <http://localhost:3000/swagger>
 
-## Support
+4. #### Runing the unit test
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+   ````bash
+   yarn run test
+   ```-
+   ````

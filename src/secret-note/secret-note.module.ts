@@ -3,7 +3,7 @@ import { SecretNoteController } from './secret-note.controller';
 import { SecretNoteService } from './secret-note.service';
 import { SecretNotes } from './secret-note.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EncryptionService } from '../shared/encryption.service';
+import { EncryptionService } from '../common/encryption.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([SecretNotes])],

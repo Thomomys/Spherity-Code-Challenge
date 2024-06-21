@@ -2,10 +2,15 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SecretNoteModule } from './secret-note/secret-note.module';
-import { DatabaseModule } from './shared/database.module';
+import { ConfigModule } from '@nestjs/config';
+import { DatabaseModule } from './common/database.module';
 
 @Module({
-  imports: [SecretNoteModule, DatabaseModule],
+  imports: [
+    SecretNoteModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    DatabaseModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
