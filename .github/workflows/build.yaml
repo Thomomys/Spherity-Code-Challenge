@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+        # Lint
+      - name: Lint codebase
+        run: yarn lint
+        # Unit tests
+      - name: Run unit tests
+        run: yarn jest
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag spherity:$(date +%s)
