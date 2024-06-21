@@ -4,7 +4,7 @@ import { SecretNotes } from './secret-note.entity';
 import { SecretNoteService } from './secret-note.service';
 import { EncryptionService } from '../common/encryption.service';
 import { DeleteResult, Repository } from 'typeorm';
-import { ErrorResponse, MessageResponse } from 'src/common/response.type';
+import { MessageResponse } from 'src/common/response.type';
 import { HttpStatus } from '@nestjs/common';
 
 describe('SecretNoteService', () => {
