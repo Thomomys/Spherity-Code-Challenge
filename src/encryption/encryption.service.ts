@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { createCipheriv, createDecipheriv, pbkdf2Sync } from 'crypto';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 @Injectable()
 export class EncryptionService {
-  private readonly algorithm = 'aes-256-cbc';
-  private readonly keyLength: number = 32;
-  private readonly salt: string = 'mysaltvalue'; // Salt used for key derivation
+  private readonly algorithm = process.env.ENCRYPT_ALGORITHM;
   private readonly key: Buffer; // Fixed-length key for encryption and decryption
 
   constructor() {
@@ -15,11 +16,11 @@ export class EncryptionService {
 
   private generateKey(): Buffer {
     return pbkdf2Sync(
-      'mysecretkeymysecretkeymysecretkey',
-      this.salt,
-      100000,
-      this.keyLength,
-      'sha512',
+      process.env.ENCRYPT_PASSWORD,
+      process.env.ENCRYPT_SALT,
+      parseInt(process.env.ENCRYPT_ITERATIONS, 10),
+      parseInt(process.env.ENCRYPT_KEYLEN, 10),
+      process.env.ENCRYPT_DIGEST,
     );
   }
 

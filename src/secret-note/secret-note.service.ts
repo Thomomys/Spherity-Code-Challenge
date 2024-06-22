@@ -2,9 +2,12 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SecretNotes } from './secret-note.entity';
-import { CreateSecretNoteDto } from './secret-note.dto';
-import { EncryptionService } from '../common/encryption.service';
-import { ErrorResponse, MessageResponse } from '../common/response.type';
+import { CreateSecretNoteDto, UpdateSecretNoteDto } from './secret-note.dto';
+import { EncryptionService } from '../encryption/encryption.service';
+import {
+  ErrorResponseDto as ErrorResponseDto,
+  MessageResponseDto as MessageResponseDto,
+} from '../response/response.dto';
 
 @Injectable()
 export class SecretNoteService {
@@ -25,7 +28,7 @@ export class SecretNoteService {
     return await this.secretNoteRepository.find();
   }
 
-  async findOne(id: number): Promise<SecretNotes | ErrorResponse> {
+  async findOne(id: number): Promise<SecretNotes | ErrorResponseDto> {
     const secretNote = await this.secretNoteRepository.findOne({
       where: {
         id: id,
@@ -39,7 +42,7 @@ export class SecretNoteService {
     return secretNote;
   }
 
-  async findOneEncrypted(id: number): Promise<SecretNotes | ErrorResponse> {
+  async findOneEncrypted(id: number): Promise<SecretNotes | ErrorResponseDto> {
     const secretNote = await this.secretNoteRepository.findOne({
       where: {
         id: id,
@@ -51,7 +54,7 @@ export class SecretNoteService {
     return secretNote;
   }
 
-  async remove(id: number): Promise<MessageResponse | ErrorResponse> {
+  async remove(id: number): Promise<MessageResponseDto | ErrorResponseDto> {
     const secretNote = await this.secretNoteRepository.delete(id);
 
     if (!secretNote.affected)
@@ -62,8 +65,8 @@ export class SecretNoteService {
 
   async update(
     id: number,
-    updateSecretNoteDto: CreateSecretNoteDto,
-  ): Promise<SecretNotes | ErrorResponse> {
+    updateSecretNoteDto: UpdateSecretNoteDto,
+  ): Promise<SecretNotes | ErrorResponseDto> {
     const secretNote = await this.secretNoteRepository.findOne({
       where: {
         id: id,
