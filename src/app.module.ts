@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SecretNoteModule } from './secret-note/secret-note.module';
 import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from './common/database.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [

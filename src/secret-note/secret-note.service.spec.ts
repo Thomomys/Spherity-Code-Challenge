@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { SecretNotes } from './secret-note.entity';
 import { SecretNoteService } from './secret-note.service';
-import { EncryptionService } from '../common/encryption.service';
+import { EncryptionService } from '../encryption/encryption.service';
 import { DeleteResult, Repository } from 'typeorm';
-import { MessageResponse } from 'src/common/response.type';
+import { MessageResponseDto } from '../response/response.dto';
 import { HttpStatus } from '@nestjs/common';
 
 describe('SecretNoteService', () => {
@@ -160,7 +160,7 @@ describe('SecretNoteService', () => {
         },
         affected: 1,
       };
-      const successMessage: MessageResponse = {
+      const successMessage: MessageResponseDto = {
         statusCode: HttpStatus.OK,
         message: 'Successfully deleted',
       };

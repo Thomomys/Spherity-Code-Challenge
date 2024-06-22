@@ -3,7 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { SecretNotes } from './secret-note.entity';
 import { SecretNoteController } from './secret-note.controller';
 import { SecretNoteService } from './secret-note.service';
-import { EncryptionService } from '../common/encryption.service';
+import { EncryptionService } from '../encryption/encryption.service';
 import { HttpStatus } from '@nestjs/common';
 
 describe('SecretNoteController', () => {
