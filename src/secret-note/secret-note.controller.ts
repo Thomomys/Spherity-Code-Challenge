@@ -8,10 +8,15 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { MessageResponse, ErrorResponse } from '../common/response.type';
+import { MessageResponseDto, ErrorResponseDto } from '../response/response.dto';
 import { SecretNoteService } from './secret-note.service';
-import { CreateSecretNoteDto } from './secret-note.dto';
-import { SecretNotes, SecretNotesWithoutNote } from './secret-note.entity';
+import {
+  CreateSecretNoteDto,
+  UpdateSecretNoteDto,
+  SecretNoteResponseDto,
+  SecretNoteListResponseDto,
+} from './secret-note.dto';
+import { SecretNotes } from './secret-note.entity';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
 
@@ -33,9 +38,9 @@ export class SecretNoteController {
   }
 
   @ApiOperation({ summary: 'Get all secret note' })
-  @ApiResponse({ status: HttpStatus.OK, type: [SecretNotesWithoutNote] })
+  @ApiResponse({ status: HttpStatus.OK, type: [SecretNoteListResponseDto] })
   @Get()
-  async findAll(): Promise<SecretNotesWithoutNote[]> {
+  async findAll(): Promise<SecretNoteListResponseDto[]> {
     const secretNotes = await this.secretNoteService.findAll();
     return secretNotes.map((secretNote) => ({
       id: secretNote.id,
@@ -44,41 +49,43 @@ export class SecretNoteController {
   }
 
   @ApiOperation({ summary: 'Get a decrypted secret note by ID' })
-  @ApiResponse({ status: HttpStatus.OK, type: SecretNotes })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorResponse })
+  @ApiResponse({ status: HttpStatus.OK, type: SecretNoteResponseDto })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorResponseDto })
   @Get('decrypted/:id')
-  async findOne(@Param('id') id: number): Promise<SecretNotes | ErrorResponse> {
+  async findOne(
+    @Param('id') id: number,
+  ): Promise<SecretNoteResponseDto | ErrorResponseDto> {
     return this.secretNoteService.findOne(id);
   }
 
   @ApiOperation({ summary: 'Get a encrypted secret note by ID' })
-  @ApiResponse({ status: HttpStatus.OK, type: SecretNotes })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorResponse })
+  @ApiResponse({ status: HttpStatus.OK, type: SecretNoteResponseDto })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorResponseDto })
   @Get('encrypted/:id')
   async findOneEncrypted(
     @Param('id') id: number,
-  ): Promise<SecretNotes | ErrorResponse> {
+  ): Promise<SecretNoteResponseDto | ErrorResponseDto> {
     return this.secretNoteService.findOneEncrypted(id);
   }
 
   @ApiOperation({ summary: 'Delete a secret note by ID' })
-  @ApiResponse({ status: HttpStatus.OK, type: MessageResponse })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorResponse })
+  @ApiResponse({ status: HttpStatus.OK, type: MessageResponseDto })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorResponseDto })
   @Delete(':id')
   async remove(
     @Param('id') id: number,
-  ): Promise<MessageResponse | ErrorResponse> {
+  ): Promise<MessageResponseDto | ErrorResponseDto> {
     return this.secretNoteService.remove(id);
   }
 
   @ApiOperation({ summary: 'Update a secret note by ID' })
-  @ApiResponse({ status: HttpStatus.OK, type: SecretNotes })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorResponse })
+  @ApiResponse({ status: HttpStatus.OK, type: SecretNoteResponseDto })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorResponseDto })
   @Put(':id')
   async update(
     @Param('id') id: number,
-    @Body() updateSecretNoteDto: CreateSecretNoteDto,
-  ): Promise<SecretNotes | ErrorResponse> {
+    @Body() updateSecretNoteDto: UpdateSecretNoteDto,
+  ): Promise<SecretNoteResponseDto | ErrorResponseDto> {
     return this.secretNoteService.update(id, updateSecretNoteDto);
   }
 }

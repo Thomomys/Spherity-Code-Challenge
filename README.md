@@ -43,29 +43,17 @@ We are looking forward to your solution. If you have any questions about your ch
 
 ## Running the app
 
-1. #### Installation
-
-   ```bash
-   yarn run install
-   ```
+1. #### Make sure you've installed docker and docker-compose within your OS
 
 2. #### Configure environment
 
    - Copy `.env.example` file and paste it within same directory
    - Rename it as `.env`
-   - Configure `port` and `database environemnt`
 
-3. #### Runing the app
+3. #### Runing the app by Docker
 
    ```bash
-   yarn run start
+   docker-compose up -d
    ```
 
    You can see swagger doucmentation at <http://localhost:3000/swagger>
-
-4. #### Runing the unit test
-
-   ````bash
-   yarn run test
-   ```-
-   ````
